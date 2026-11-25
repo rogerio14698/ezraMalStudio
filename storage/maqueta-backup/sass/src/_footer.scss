@@ -1,0 +1,75 @@
+@use '../global/var' as *;
+
+.footer {
+    background-color: $color-ink;
+    color: $color-bg;
+    padding-block: clamp(4rem, 7vw, 6rem) 2rem;
+
+    &__grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 3rem;
+        padding-bottom: 3.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &__title {
+        font-family: $font-display;
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 400;
+        margin-bottom: 1rem;
+    }
+
+    &__text {
+        color: rgba($color-bg, 0.75);
+        max-width: 440px;
+        margin-bottom: 1.75rem;
+    }
+
+    &__mail {
+        display: inline-block;
+        font-family: $font-display;
+        font-size: 1.35rem;
+        color: $color-ochre;
+        border-bottom: 1px solid $color-ochre;
+        padding-bottom: 2px;
+    }
+
+    &__meta {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    &__col h3 {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: rgba($color-bg, 0.6);
+        margin-bottom: 1rem;
+    }
+
+    &__col p,
+    &__socials li {
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+    }
+
+    &__socials {
+        list-style: none;
+
+        a:hover {
+            color: $color-terracotta;
+        }
+    }
+
+    &__bottom {
+        padding-top: 2rem;
+        font-size: 0.85rem;
+        color: rgba($color-bg, 0.55);
+    }
+}

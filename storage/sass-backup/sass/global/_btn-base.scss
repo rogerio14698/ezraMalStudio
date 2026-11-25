@@ -1,0 +1,40 @@
+@use 'variables' as *;
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+// Botones reutilizables
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.9rem 1.75rem;
+    border-radius: 62.4375rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: transform 0.3s $ease-out-expo, background-color 0.3s ease, box-shadow 0.3s ease;
+
+    &--primary {
+        background-color: $color-ink;
+        color: $color-bg;
+
+        &:hover {
+            background-color: $color-terracotta;
+            transform: translateY(-2px);
+        }
+    }
+
+    &--outline {
+        border: 1.5px solid $color-ink;
+        color: $color-ink;
+
+        &:hover {
+            background-color: $color-ink;
+            color: $color-bg;
+        }
+    }
+}

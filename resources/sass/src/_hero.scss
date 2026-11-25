@@ -1,0 +1,113 @@
+@use '../global/var' as *;
+
+// ======================= Hero (sections/hero.blade.php) =======================
+.hero {
+    display: flex;
+    align-items: center;
+    min-height: calc(100svh - 76px); // ocupa la primera pantalla
+    padding-block: clamp(2.5rem, 6vw, 5rem);
+
+    &__grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: clamp(2rem, 5vw, 4.5rem);
+        align-items: center;
+
+        @media (max-width: 900px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &__eyebrow {
+        display: inline-block;
+        margin-bottom: 1.25rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: $color-terracotta;
+    }
+
+    &__title {
+        font-family: $font-display;
+        font-size: clamp(2.6rem, 5.5vw, 4.4rem);
+        font-weight: 400;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        margin-bottom: 1.5rem;
+
+        em {
+            font-style: italic;
+            color: $color-terracotta;
+        }
+    }
+
+    &__subtitle {
+        max-width: 540px;
+        margin-bottom: 2rem;
+        font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+        color: $color-ink-muted;
+    }
+
+    &__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+    }
+
+    // Datos cortos (8 personas, 5+ años...)
+    &__facts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid $color-border;
+
+        dt {
+            font-family: $font-display;
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        dd {
+            margin-top: 0.35rem;
+            font-size: 0.85rem;
+            color: $color-ink-muted;
+        }
+    }
+
+    &__visual img {
+        width: 100%;
+        aspect-ratio: 4 / 5;
+        object-fit: cover;
+        //border-radius: $radius-lg;
+        box-shadow: 0 10px 20px rgba($color-ink, 0.12);
+
+        @media (max-width: 900px) {
+            aspect-ratio: 4 / 3;
+        }
+    }
+}
+
+// ======================= Entrada al cargar la página =======================
+// Cualquier elemento con data-enter aparece una sola vez al cargar.
+[data-enter] {
+    animation: enter 0.9s $ease-out-expo both;
+
+    & + [data-enter] {
+        animation-delay: 0.15s;
+    }
+}
+
+@keyframes enter {
+    from {
+        opacity: 0;
+        transform: translateY(1.25rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}

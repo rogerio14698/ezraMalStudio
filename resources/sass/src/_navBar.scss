@@ -1,0 +1,138 @@
+@use '../global/var' as *;
+
+// ======================= Cabecera (layouts/header.blade.php) =======================
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid $color-border;
+
+    // Fondo translúcido en un pseudo-elemento: si backdrop-filter estuviera en
+    // .navbar, el menú móvil (position: fixed) quedaría atrapado dentro de la cabecera.
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background-color: rgba($color-bg, 0.92);
+        backdrop-filter: blur(12px);
+    }
+
+    &__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 76px;
+    }
+
+    &__brand {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        min-height: 44px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+    }
+
+    &__brand-dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, $color-terracotta, $color-ochre);
+    }
+
+    &__menu {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    &__link {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        font-size: 0.95rem;
+        font-weight: 500;
+
+        // Subrayado que se dibuja al pasar el ratón
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 8px;
+            width: 100%;
+            height: 2px;
+            background-color: $color-terracotta;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s $ease-out-expo;
+        }
+
+        &:hover::after {
+            transform: scaleX(1);
+        }
+    }
+
+    &__cta {
+        min-height: 44px;
+        padding: 0.6rem 1.35rem;
+        font-size: 0.9rem;
+    }
+
+    // Botón hamburguesa (solo móvil)
+    &__toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        gap: 6px;
+        width: 44px;
+        height: 44px;
+        padding: 10px;
+
+        span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background-color: $color-ink;
+            transition: transform 0.3s ease;
+        }
+
+        &[aria-expanded='true'] {
+            span:first-child {
+                transform: translateY(4px) rotate(45deg);
+            }
+
+            span:last-child {
+                transform: translateY(-4px) rotate(-45deg);
+            }
+        }
+    }
+
+    // ===== Móvil: menú a pantalla completa =====
+    @media (max-width: 860px) {
+        &__toggle {
+            display: flex;
+        }
+
+        &__menu {
+            position: fixed;
+            inset: 76px 0 0 0;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 2rem;
+            background-color: $color-bg;
+            font-size: 1.25rem;
+            visibility: hidden;
+            transform: translateX(100%);
+            transition: transform 0.4s $ease-out-expo, visibility 0s linear 0.4s;
+
+            &.is-open {
+                visibility: visible;
+                transform: translateX(0);
+                transition: transform 0.4s $ease-out-expo;
+            }
+        }
+    }
+}

@@ -1,0 +1,52 @@
+@use '../global/var' as *;
+
+// ======================= Visita (sections/visita.blade.php) =======================
+.visit {
+    background-color: $color-surface-alt;
+
+    &__grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(2rem, 5vw, 4.5rem);
+        align-items: center;
+
+        @media (max-width: 900px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    // Tabla de horarios
+    &__hours {
+        margin-block: 2rem;
+        border-top: 1px solid $color-border;
+    }
+
+    &__row {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-block: 1rem;
+        border-bottom: 1px solid $color-border;
+
+        dt {
+            font-weight: 600;
+        }
+
+        dd {
+            color: $color-ink-muted;
+            text-align: right;
+        }
+    }
+
+    &__place {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem 1.5rem;
+    }
+
+    &__visual {
+        aspect-ratio: 1;
+        box-shadow: 0 10px 20px rgba($color-ink, 0.12);
+    }
+}

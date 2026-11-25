@@ -1,0 +1,134 @@
+@use '../global/var' as *;
+
+.gallery {
+    padding-block: clamp(4rem, 8vw, 7rem);
+    background-color: $color-surface;
+    border-top: 1px solid $color-border;
+
+    &__filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .filter-btn {
+        padding: 0.55rem 1.25rem;
+        border-radius: 999px;
+        border: 1px solid $color-border;
+        font-size: 0.88rem;
+        font-weight: 500;
+        transition: all 0.25s ease;
+
+        &:hover,
+        &.is-active {
+            background-color: $color-terracotta;
+            border-color: $color-terracotta;
+            color: #FFFFFF;
+        }
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.75rem;
+
+        @media (max-width: 900px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: 580px) {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: $radius-md;
+    overflow: hidden;
+    cursor: zoom-in;
+    background-color: $color-surface-alt;
+
+    &.is-hidden {
+        display: none;
+    }
+
+    img {
+        width: 100%;
+        aspect-ratio: 4 / 5;
+        object-fit: cover;
+        transition: transform 0.6s $ease-out-expo;
+    }
+
+    &:hover img {
+        transform: scale(1.04);
+    }
+
+    &__caption {
+        padding: 1.1rem 1.25rem;
+        background-color: $color-bg;
+        border: 1px solid $color-border;
+        border-top: none;
+        border-radius: 0 0 $radius-md $radius-md;
+
+        strong {
+            display: block;
+            font-family: $font-display;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        span {
+            font-size: 0.84rem;
+            color: $color-ink-muted;
+        }
+    }
+}
+
+// Lightbox modal
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background-color: rgba(24, 23, 21, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+
+    &.is-open {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    &__close {
+        position: absolute;
+        top: 1.5rem;
+        right: 2rem;
+        color: #FFFFFF;
+        font-size: 2.5rem;
+        line-height: 1;
+    }
+
+    &__content {
+        max-width: 820px;
+        text-align: center;
+
+        img {
+            max-height: 75vh;
+            margin-inline: auto;
+            border-radius: $radius-sm;
+        }
+
+        p {
+            color: #FFFFFF;
+            margin-top: 1rem;
+            font-family: $font-display;
+            font-size: 1.15rem;
+        }
+    }
+}

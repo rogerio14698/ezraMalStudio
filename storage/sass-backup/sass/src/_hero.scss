@@ -1,0 +1,138 @@
+@use '../base/variables' as *;
+
+.hero {
+    padding-block: clamp(3.5rem, 7vw, 6.5rem);
+
+    &__grid {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: clamp(2.5rem, 5vw, 4.5rem);
+        align-items: center;
+
+        @media (max-width: 900px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 0.4rem 1rem;
+        border-radius: 999px;
+        background-color: $color-surface-alt;
+        border: 1px solid $color-border;
+        font-size: 0.82rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+    }
+
+    &__title {
+        font-family: $font-display;
+        font-size: clamp(2.6rem, 5.5vw, 4.4rem);
+        font-weight: 400;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        margin-bottom: 1.5rem;
+
+        em {
+            font-style: italic;
+            color: $color-terracotta;
+        }
+    }
+
+    &__subtitle {
+        font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+        color: $color-ink-muted;
+        max-width: 540px;
+        margin-bottom: 2.25rem;
+    }
+
+    &__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    &__canvas-frame {
+        position: relative;
+        border-radius: $radius-lg;
+        overflow: visible;
+
+        img {
+            border-radius: $radius-lg;
+            aspect-ratio: 4 / 5;
+            object-fit: cover;
+            box-shadow: 0 24px 48px rgba(24, 23, 21, 0.12);
+        }
+    }
+
+    &__sticker {
+        position: absolute;
+        bottom: -18px;
+        left: -18px;
+        width: 112px;
+        height: 112px;
+        border-radius: 50%;
+        background-color: $color-ochre;
+        color: $color-ink;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        transform: rotate(-8deg);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+        span {
+            font-family: $font-display;
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        small {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+    }
+}
+
+.manifesto {
+    padding-block: clamp(3rem, 6vw, 5rem);
+    background-color: $color-surface-alt;
+    border-block: 1px solid $color-border;
+
+    &__inner {
+        max-width: 860px;
+        text-align: center;
+    }
+
+    &__quote {
+        font-family: $font-display;
+        font-size: clamp(1.45rem, 2.8vw, 2.2rem);
+        line-height: 1.35;
+        margin-bottom: 1.75rem;
+
+        span {
+            color: $color-lavender;
+            font-style: italic;
+        }
+    }
+
+    &__tags {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem;
+
+        span {
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.35rem 0.9rem;
+            border-radius: 999px;
+            background-color: $color-bg;
+            border: 1px solid $color-border;
+        }
+    }
+}

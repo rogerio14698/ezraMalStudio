@@ -1,0 +1,108 @@
+@use '../global/var' as *;
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: rgba($color-bg, 0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid $color-border;
+
+    &__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 76px;
+    }
+
+    &__brand {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        font-size: 0.95rem;
+    }
+
+    &__brand-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, $color-terracotta, $color-ochre, $color-lavender);
+    }
+
+    &__menu {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+
+        @media (max-width: 768px) {
+            position: fixed;
+            inset: 76px 0 0 0;
+            background-color: $color-bg;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2rem;
+            transform: translateX(100%);
+            transition: transform 0.4s $ease-out-expo;
+
+            &.is-open {
+                transform: translateX(0);
+            }
+        }
+    }
+
+    &__link {
+        font-size: 0.95rem;
+        font-weight: 500;
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 2px;
+            background-color: $color-terracotta;
+            transition: width 0.3s ease;
+        }
+
+        &:hover::after {
+            width: 100%;
+        }
+    }
+
+    &__cta {
+        padding: 0.6rem 1.35rem;
+        border-radius: 999px;
+        background-color: $color-ink;
+        color: $color-bg;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: $color-terracotta;
+        }
+    }
+
+    &__toggle {
+        display: none;
+        flex-direction: column;
+        gap: 6px;
+        width: 28px;
+
+        span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background-color: $color-ink;
+            transition: transform 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            display: flex;
+        }
+    }
+}

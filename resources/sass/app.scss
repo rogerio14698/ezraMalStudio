@@ -1,0 +1,22 @@
+// =====================================================================
+// ENTRADA SCSS (la compila Vite: resources/sass/app.scss)
+// Cada sección de la web tiene su parcial en ./src con el mismo nombre
+// que su vista en resources/views/ezraStudio/sections/
+// =====================================================================
+
+// ======================= Base =======================
+@use './global/normalize';
+@use './global/global';
+@use './global/fonts';
+@use './global/btn-base';
+@use './global/tokens';
+@use './global/tools';
+
+// ======================= Componentes / secciones =======================
+@use './src/navBar';     // layouts/header.blade.php
+@use './src/hero';       // sections/hero.blade.php
+@use './src/visit';      // sections/visita.blade.php
+@use './src/services';   // sections/talleres.blade.php
+@use './src/gallery';    // sections/galeria.blade.php
+@use './src/manifesto';  // sections/manifiesto.blade.php
+@use './src/footer';     // layouts/footer.blade.php

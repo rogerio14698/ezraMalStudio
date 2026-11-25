@@ -1,0 +1,12 @@
+@use './global/normalize';
+@use './global/global';
+@use './global/fonts';
+@use './global/btn-base';
+@use './global/var';
+@use './global/tokens';
+@use './global/tools';
+
+
+// ======================= Componentes =======================
+@use './src/navBar';
+

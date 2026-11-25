@@ -1,0 +1,27 @@
+// Paleta cromática: Lienzo cálido + Tinta profunda + Acentos artísticos
+$color-bg: #F9F6F0;
+$color-surface: #FFFFFF;
+$color-surface-alt: #F1ECE1;
+$color-ink: #181715;
+$color-ink-muted: #57534E;
+
+// Acentos expresivos
+$color-terracotta: #E05A47;
+$color-cobalt: #2B4C7E;
+$color-ochre: #E6A82E;
+$color-lavender: #8B72BE;
+
+$color-border: rgba(24, 23, 21, 0.12);
+
+// Tipografía
+$font-display: 'Fraunces', Georgia, serif;
+$font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+
+// Espaciado y radios
+$container-max: 1220px;
+$radius-sm: 8px;
+$radius-md: 16px;
+$radius-lg: 28px;
+
+// Transiciones
+$ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);

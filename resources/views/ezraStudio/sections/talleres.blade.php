@@ -2,15 +2,14 @@
 |--------------------------------------------------------------------------
 | SECCIÓN 3 · TALLERES
 |--------------------------------------------------------------------------
-| Dos pestañas (adultos / infancias). Cada pestaña es un grupo dentro de
-| $talleres y cada taller es una tarjeta.
-| - Añadir un taller: copia un bloque ['etiqueta' => ..., ...] dentro del grupo.
-| - Añadir una pestaña: añade un grupo nuevo con su 'id' y 'pestana'.
+| Datos: panel → Contenido → Talleres publicados ($talleresPublicados).
+| Se reparten en dos pestañas según "Público"; los de "Todos los públicos"
+| aparecen en ambas. Mientras no haya talleres publicados, se usa $grupos
+| de ejemplo.
 | El cambio de pestaña está en resources/js/studio.js (data-tab / data-panel).
 --}}
-
 @php
-    $talleres = [
+    $grupos = [
         [
             'id' => 'adultos',
             'pestana' => 'Adultos (+16 años)',
@@ -72,6 +71,31 @@
             ],
         ],
     ];
+
+    // Talleres del panel: mismas pestañas, tarjetas desde la base de datos.
+    if (isset($talleresPublicados) && $talleresPublicados->isNotEmpty()) {
+        $grupos = collect(['adultos' => 'Adultos (+16 años)', 'infancias' => 'Infancias (5 a 15 años)'])
+            ->map(fn ($pestana, $id) => [
+                'id' => $id,
+                'pestana' => $pestana,
+                'items' => $talleresPublicados
+                    ->filter(fn ($taller) => in_array($taller->publico?->value, [$id, 'todos'], true))
+                    ->map(fn ($taller) => [
+                        'etiqueta' => $taller->category,
+                        'titulo' => $taller->title,
+                        'texto' => $taller->summary,
+                        'puntos' => $taller->tags ?? [],
+                        'imagen' => $taller->image,
+                        'imagen_variants' => $taller->image_variants,
+                        'imagen_alt' => $taller->image_alt ?: $taller->title,
+                    ])
+                    ->values()
+                    ->all(),
+            ])
+            ->filter(fn ($grupo) => $grupo['items'])
+            ->values()
+            ->all();
+    }
 @endphp
 
 <section class="section services" id="talleres" aria-labelledby="talleres-titulo">
@@ -85,7 +109,7 @@
 
         {{-- Pestañas --}}
         <div class="services__tabs" role="tablist" aria-label="Público">
-            @foreach ($talleres as $i => $grupo)
+            @foreach ($grupos as $i => $grupo)
                 <button class="services__tab" type="button" role="tab" id="tab-{{ $grupo['id'] }}"
                     data-tab="{{ $grupo['id'] }}" aria-controls="panel-{{ $grupo['id'] }}"
                     aria-selected="{{ $i === 0 ? 'true' : 'false' }}">
@@ -95,29 +119,41 @@
         </div>
 
         {{-- Paneles con tarjetas --}}
-        @foreach ($talleres as $i => $grupo)
+        @foreach ($grupos as $i => $grupo)
             <div class="services__grid" role="tabpanel" id="panel-{{ $grupo['id'] }}" data-panel="{{ $grupo['id'] }}"
                 aria-labelledby="tab-{{ $grupo['id'] }}" @if ($i !== 0) hidden @endif>
-
                 @foreach ($grupo['items'] as $taller)
                     <article class="service-card">
-                        <div class="service-card__media photo">
-                            <img src="{{ $taller['imagen'] }}" alt="{{ $taller['imagen_alt'] }}" width="800"
-                                height="600" loading="lazy">
-                        </div>
+                        @if ($taller['imagen'])
+                            <div class="service-card__media photo">
+                                @if (!empty($taller['imagen_variants']))
+                                    <x-picture :src="$taller['imagen']" :variants="$taller['imagen_variants']"
+                                        :alt="$taller['imagen_alt']"
+                                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" />
+                                @else
+                                    <img src="{{ \App\Support\Media::url($taller['imagen']) }}" alt="{{ $taller['imagen_alt'] }}"
+                                        width="800" height="600" loading="lazy" decoding="async">
+                                @endif
+                            </div>
+                        @endif
                         <div class="service-card__body">
-                            <span class="service-card__tag">{{ $taller['etiqueta'] }}</span>
+                            @if ($taller['etiqueta'])
+                                <span class="service-card__tag">{{ $taller['etiqueta'] }}</span>
+                            @endif
                             <h3 class="service-card__title">{{ $taller['titulo'] }}</h3>
-                            <p class="service-card__text">{{ $taller['texto'] }}</p>
-                            <ul class="service-card__list">
-                                @foreach ($taller['puntos'] as $punto)
-                                    <li>{{ $punto }}</li>
-                                @endforeach
-                            </ul>
+                            @if ($taller['texto'])
+                                <p class="service-card__text">{{ $taller['texto'] }}</p>
+                            @endif
+                            @if ($taller['puntos'])
+                                <ul class="service-card__list">
+                                    @foreach ($taller['puntos'] as $punto)
+                                        <li>{{ $punto }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
                         </div>
                     </article>
                 @endforeach
-
             </div>
         @endforeach
 

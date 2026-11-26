@@ -1,0 +1,98 @@
+@use '../global/var' as *;
+
+// ======================= Medios: <x-picture>, vídeos y PDFs (sections/galeria.blade.php) =======================
+
+// <picture> no crea caja propia: el <img> se comporta como hijo directo de .photo.
+.picture {
+    display: contents;
+}
+
+.gallery {
+    &__collection:not(:first-child) {
+        margin-top: clamp(3rem, 6vw, 4.5rem);
+    }
+
+    &__collection-title {
+        margin-bottom: 0.5rem;
+        font-family: $font-display;
+        font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+    }
+
+    &__collection-desc {
+        max-width: 60ch;
+        margin-bottom: 1.5rem;
+        color: $color-ink-muted;
+    }
+
+    &__item {
+        margin: 0;
+    }
+
+    // Vídeo: poster ligero y preload="none" hasta que se pulsa play.
+    &__item--video {
+        overflow: hidden;
+        border-radius: $radius-md;
+        background-color: $color-ink;
+    }
+
+    &__video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+    }
+
+    &__caption {
+        padding: 0.75rem 1rem;
+        color: $color-bg;
+        font-size: 0.875rem;
+    }
+
+    // PDF: tarjeta con título y peso; el archivo solo se pide al pulsar.
+    &__pdf {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1.5rem;
+        border: 1px solid $color-border;
+        border-radius: $radius-md;
+        background-color: $color-surface;
+    }
+
+    &__pdf-badge {
+        align-self: flex-start;
+        padding: 0.25rem 0.5rem;
+        border-radius: $radius-sm;
+        background-color: $color-terracotta;
+        color: $color-surface;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+
+    &__pdf-title {
+        font-family: $font-display;
+        font-size: 1.25rem;
+    }
+
+    &__pdf-desc,
+    &__pdf-size {
+        color: $color-ink-muted;
+        font-size: 0.875rem;
+    }
+
+    &__pdf-actions {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        margin-top: auto;
+        padding-top: 0.5rem;
+    }
+
+    &__pdf-download {
+        color: $color-cobalt;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+}

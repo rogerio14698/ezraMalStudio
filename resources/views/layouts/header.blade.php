@@ -2,26 +2,15 @@
 |--------------------------------------------------------------------------
 | CABECERA / NAVEGACIÓN
 |--------------------------------------------------------------------------
-| - $estudio viene de app.blade.php
-| - Para añadir o quitar un enlace, edita el array $menu.
-| - Los enlaces apuntan a los id de cada sección (#visita, #talleres...).
+| - $estudio y $menu llegan de SiteComposer (panel → Pie de página y Menús).
+| - Si no hay menús en el panel se usan los enlaces de ejemplo (#visita, #talleres…).
 | - El botón hamburguesa se controla en resources/js/studio.js
 --}}
-
-@php
-    $menu = [
-        ['texto' => 'Visítanos', 'href' => '#visita'],
-        ['texto' => 'Talleres', 'href' => '#talleres'],
-        ['texto' => 'Galería', 'href' => '#galeria'],
-        ['texto' => 'Manifiesto', 'href' => '#manifiesto'],
-    ];
-@endphp
-
 <header class="navbar" id="navbar">
     <div class="container navbar__inner">
 
-        {{-- Logo / nombre (sustituir el punto por el logo cuando exista) --}}
-        <a href="#inicio" class="navbar__brand" aria-label="{{ $estudio['nombre'] }}, ir al inicio">
+        {{-- Logo / nombre --}}
+        <a href="{{ route('home') }}#inicio" class="navbar__brand" aria-label="{{ $estudio['nombre'] }}, ir al inicio">
             <span class="navbar__brand-dot" aria-hidden="true"></span>
             <span>{{ $estudio['nombre'] }}</span>
         </a>
@@ -36,7 +25,8 @@
         {{-- Menú --}}
         <nav class="navbar__menu" id="navMenu" aria-label="Principal">
             @foreach ($menu as $item)
-                <a href="{{ $item['href'] }}" class="navbar__link">{{ $item['texto'] }}</a>
+                <a href="{{ $item['href'] }}" class="navbar__link"
+                    @if ($item['nueva']) target="_blank" rel="noopener" @endif>{{ $item['texto'] }}</a>
             @endforeach
             <a href="#contacto" class="btn btn--primary navbar__cta">Reservar clase de prueba</a>
         </nav>

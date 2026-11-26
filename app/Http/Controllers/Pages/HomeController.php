@@ -3,63 +3,39 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\CMSPaginas\Footer;
+use App\Models\CMSPaginas\Header;
+use App\Models\Galerias\GaleriaColeccion;
+use App\Models\Servicios\Taller;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Log;
 
+/**
+ * Portada pública. Carga el contenido gestionado desde el panel;
+ * cada sección usa sus textos de ejemplo si todavía no hay datos.
+ */
 class HomeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __invoke(): View
     {
-        //
-    }
+        try {
+            $datos = [
+                'header' => Header::current(),
+                'footer' => Footer::current(),
+                'talleresPublicados' => Taller::query()->publicado()->ordenado()->get(),
+                'colecciones' => GaleriaColeccion::query()
+                    ->publicado()
+                    ->ordenado()
+                    ->with('elementosVisibles')
+                    ->get(),
+            ];
+        } catch (\Throwable $e) {
+            // Si la base de datos falla, la web se muestra con el contenido de ejemplo.
+            Log::error('No se pudo cargar el contenido de la portada', ['error' => $e->getMessage()]);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+            $datos = ['header' => null, 'footer' => null, 'talleresPublicados' => collect(), 'colecciones' => collect()];
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view('ezraStudio.home', $datos + ['seoKey' => 'home']);
     }
 }

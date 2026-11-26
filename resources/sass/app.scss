@@ -18,5 +18,7 @@
 @use './src/visit';      // sections/visita.blade.php
 @use './src/services';   // sections/talleres.blade.php
 @use './src/gallery';    // sections/galeria.blade.php
+@use './src/media';    // <x-picture>, vídeos y PDFs de la galería
 @use './src/manifesto';  // sections/manifiesto.blade.php
 @use './src/footer';     // layouts/footer.blade.php
+@use './src/contact';  // formulario de contacto del pie
